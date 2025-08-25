@@ -127,5 +127,19 @@
       "type": "dart",
       "program": "lib/recipes/recipes.dart",
     },
+    {
+      "name": "echo",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/echo/echo.dart",
+    },
+    {
+      "name": "link handling",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/link_handling/link_handling.dart",
+    },
   ]
 }

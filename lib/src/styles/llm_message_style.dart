@@ -9,6 +9,10 @@ import 'tookit_icons.dart';
 import 'toolkit_colors.dart';
 import 'toolkit_text_styles.dart';
 
+/// Callback for handling link taps in markdown content.
+/// Parameters: text (link text), href (URL), title (optional title)
+typedef MarkdownTapLinkCallback = void Function(String text, String? href, String title);
+
 /// Style for LLM messages.
 @immutable
 class LlmMessageStyle {
@@ -19,6 +23,7 @@ class LlmMessageStyle {
     this.iconDecoration,
     this.decoration,
     this.markdownStyle,
+    this.onTapLink,
   });
 
   /// Resolves the provided style with the default style.
@@ -47,6 +52,7 @@ class LlmMessageStyle {
       iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
       markdownStyle: style?.markdownStyle ?? defaultStyle.markdownStyle,
       decoration: style?.decoration ?? defaultStyle.decoration,
+      onTapLink: style?.onTapLink ?? defaultStyle.onTapLink,
     );
   }
 
@@ -62,7 +68,11 @@ class LlmMessageStyle {
       shape: BoxShape.circle,
     ),
     markdownStyle: MarkdownStyleSheet(
-      a: ToolkitTextStyles.body1,
+      a: ToolkitTextStyles.body1.copyWith(
+        color: const Color(0xFF1976D2), // Material Blue 700
+        decoration: TextDecoration.underline,
+        decorationColor: const Color(0xFF1976D2),
+      ),
       blockquote: ToolkitTextStyles.body1,
       checkbox: ToolkitTextStyles.body1,
       code: ToolkitTextStyles.code,
@@ -107,4 +117,8 @@ class LlmMessageStyle {
 
   /// The markdown style sheet for LLM messages.
   final MarkdownStyleSheet? markdownStyle;
+
+  /// Callback for handling link taps in markdown content.
+  /// If null, links will not be interactive.
+  final MarkdownTapLinkCallback? onTapLink;
 }

@@ -40,6 +40,7 @@ class LlmChatViewStyle {
     this.actionButtonBarDecoration,
     this.fileAttachmentStyle,
     this.suggestionStyle,
+    this.onTapLink,
   });
 
   /// Resolves the provided [style] with the [defaultStyle].
@@ -67,7 +68,16 @@ class LlmChatViewStyle {
       ),
       llmMessageStyle: LlmMessageStyle.resolve(
         style?.llmMessageStyle,
-        defaultStyle: defaultStyle.llmMessageStyle,
+        defaultStyle: defaultStyle.llmMessageStyle != null 
+          ? LlmMessageStyle(
+              icon: defaultStyle.llmMessageStyle!.icon,
+              iconColor: defaultStyle.llmMessageStyle!.iconColor,
+              iconDecoration: defaultStyle.llmMessageStyle!.iconDecoration,
+              decoration: defaultStyle.llmMessageStyle!.decoration,
+              markdownStyle: defaultStyle.llmMessageStyle!.markdownStyle,
+              onTapLink: style?.onTapLink ?? defaultStyle.onTapLink,
+            )
+          : LlmMessageStyle(onTapLink: style?.onTapLink ?? defaultStyle.onTapLink),
       ),
       chatInputStyle: ChatInputStyle.resolve(
         style?.chatInputStyle,
@@ -136,6 +146,7 @@ class LlmChatViewStyle {
         style?.suggestionStyle,
         defaultStyle: defaultStyle.suggestionStyle,
       ),
+      onTapLink: style?.onTapLink ?? defaultStyle.onTapLink,
     );
   }
 
@@ -241,4 +252,8 @@ class LlmChatViewStyle {
 
   /// Style for suggestions.
   final SuggestionStyle? suggestionStyle;
+
+  /// Callback for handling link taps in LLM message markdown content.
+  /// If null, links will not be interactive.
+  final MarkdownTapLinkCallback? onTapLink;
 }
